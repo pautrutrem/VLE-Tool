@@ -33,18 +33,18 @@ keyboard.press_and_release("e")
 time.sleep(0.5)
 keyboard.press_and_release("e")
 
-time.sleep(3)
+time.sleep(5)
 keyboard.press_and_release("alt")
 time.sleep(0.5)
 keyboard.press_and_release("e")
 time.sleep(0.5)
 keyboard.press_and_release("l")
-time.sleep(2)
+time.sleep(5)
 keyboard.press_and_release("enter")
 time.sleep(0.5)
 keyboard.press_and_release("enter")
 
-time.sleep(5)
+time.sleep(10)
 keyboard.press_and_release("alt")
 time.sleep(0.5)
 keyboard.press_and_release("e")
@@ -53,13 +53,13 @@ keyboard.press_and_release("n")
 
 n = 1
 
-time.sleep(25)
+time.sleep(35)
 
 #Cerrar Excel
 
 directori_principal = os.path.dirname(os.path.abspath(__file__))
 
-db_1 = os.path.join(directori_principal, "IPEWB"+str(n)+".xlsx")
+db_1 = os.path.join(directori_principal, "IPEWB"+str(n)+".xls")
 
 llibre_1 = load_workbook(db_1)
 fulla_individual = db_1["Equipment"]
