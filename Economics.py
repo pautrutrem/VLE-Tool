@@ -51,33 +51,56 @@ keyboard.press_and_release("e")
 time.sleep(0.5)
 keyboard.press_and_release("n")
 
-n = 1
-
 time.sleep(35)
 
-#Cerrar Excel
+def trobar_fitxer(nom_fitxer, directori_inici="/"):
+    for arrel, carpetes, fitxers in os.walk(directori_inici):
+        if nom_fitxer in fitxers:
+            return os.path.join(arrel, nom_fitxer)
+    return None
 
-directori_principal = os.path.dirname(os.path.abspath(__file__))
+ruta = trobar_fitxer("IPEWB1.xls", "C:\\")  # En Windows, comença per C:\
+print(ruta)
 
-db_1 = os.path.join(directori_principal, "IPEWB"+str(n)+".xls")
+import pandas as pd
 
-llibre_1 = load_workbook(db_1)
-fulla_individual = db_1["Equipment"]
+def convertir_xls_a_xlsx(ruta_xls, ruta_xlsx):
+    # Llegeix el .xls
+    xls = pd.ExcelFile(ruta_xls)
 
-i = 4
+    # Crea un writer per guardar en .xlsx
+    with pd.ExcelWriter(ruta_xlsx, engine='openpyxl') as writer:
+        for full in xls.sheet_names:
+            df = pd.read_excel(ruta_xls, sheet_name=full)
+            df.to_excel(writer, sheet_name=full, index=False)
 
-while i <= 500:
-    if fulla_individual["B"+str(i)].Value == "":
+    print("Conversió completada:", ruta_xlsx)
+
+ruta_xlsx = ruta.replace(".xls", ".xlsx")
+convertir_xls_a_xlsx(ruta, ruta_xlsx)
+
+llibre_1 = load_workbook(ruta_xlsx)
+fulla_individual = llibre_1["Equipment"]
+
+i = 11
+n = 2
+
+while n > 0:
+    if str(fulla_individual["B"+str(i)].value) is None:
         i += 1
     else:
-        print("Nom del equip = "+ fulla_individual["B"+str(i)].Value)
+        print("Nom del equip = " + str(fulla_individual["B"+str(i)].value))
         print("")
-        print("Tipus d'equip = "+ fulla_individual["C"+str(i)].Value)
+        print("Tipus d'equip = " + str(fulla_individual["C"+str(i)].value))
         print("")
-        print("Cost directe total = "+ fulla_individual["D"+str(i)].Value + "$")
+        print("Cost directe total = " + str(fulla_individual["D"+str(i)].value) + " USD")
         print("")
-        print("Cost de l'equip = "+ fulla_individual["E"+str(i)].Value + "$")
+        print("Cost de l'equip = " + str(fulla_individual["E"+str(i)].value) + " USD")
         print("")
-        print("Pes de l'equip = "+ fulla_individual["F"+str(i)].Value + "lbs")
+        print("Pes de l'equip = " + str(fulla_individual["F"+str(i)].value) + " lbs")
         print("")
-        print("Pes de l'equip instal·lat = "+ fulla_individual["G"+str(i)].Value + "lbs")
+        print("Pes de l'equip instal·lat = " + str(fulla_individual["G"+str(i)].value) + " lbs")
+        print("")
+        print("")
+        i += 1
+        n -= 1
