@@ -3,6 +3,7 @@ import win32com.client as win32
 import time
 import keyboard
 from openpyxl import load_workbook
+from openpyxl import Workbook
 
 file='Economics.bkp'
 
@@ -83,24 +84,37 @@ llibre_1 = load_workbook(ruta_xlsx)
 fulla_individual = llibre_1["Equipment"]
 
 i = 11
-n = 2
+n = 4
+
+fulla_final = Workbook()
+nom_fulla_final = "Economics.xlsx"
+fulla_final.save(nom_fulla_final)
+
+llibre_2 = load_workbook(nom_fulla_final)
+fulla_2 = llibre_2.active
+
+fulla_2["B3"].value = "Nom del equip"
+fulla_2["B4"].value = "Tipus d'equip"
+fulla_2["B5"].value = "Cost directe total [USD]"
+fulla_2["B6"].value = "Cost de l'equip [USD]"
+fulla_2["B7"].value = "Pes de l'equip [lbs]"
+fulla_2["B8"].value = "Pes de l'equip instal·lat [lbs]"
+
+ascii_ref = 67
+c = 0
 
 while n > 0:
     if str(fulla_individual["B"+str(i)].value) is None:
         i += 1
     else:
-        print("Nom del equip = " + str(fulla_individual["B"+str(i)].value))
-        print("")
-        print("Tipus d'equip = " + str(fulla_individual["C"+str(i)].value))
-        print("")
-        print("Cost directe total = " + str(fulla_individual["D"+str(i)].value) + " USD")
-        print("")
-        print("Cost de l'equip = " + str(fulla_individual["E"+str(i)].value) + " USD")
-        print("")
-        print("Pes de l'equip = " + str(fulla_individual["F"+str(i)].value) + " lbs")
-        print("")
-        print("Pes de l'equip instal·lat = " + str(fulla_individual["G"+str(i)].value) + " lbs")
-        print("")
-        print("")
+        fulla_2[str(chr(ascii_ref+c))+"3"].value = str(fulla_individual["B"+str(i)].value)
+        fulla_2[str(chr(ascii_ref+c))+"4"].value = str(fulla_individual["C"+str(i)].value)
+        fulla_2[str(chr(ascii_ref+c))+"5"].value = str(fulla_individual["D"+str(i)].value)
+        fulla_2[str(chr(ascii_ref+c))+"6"].value = str(fulla_individual["E"+str(i)].value)
+        fulla_2[str(chr(ascii_ref+c))+"7"].value = str(fulla_individual["F"+str(i)].value)
+        fulla_2[str(chr(ascii_ref+c))+"8"].value = str(fulla_individual["G"+str(i)].value)
         i += 1
         n -= 1
+        c += 1
+
+llibre_2.save(nom_fulla_final)
