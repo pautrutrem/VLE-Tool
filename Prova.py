@@ -4,7 +4,10 @@ import os
 import keyboard
 import time
 import json
+from tkinter import *
+from tkinter import messagebox as MessageBox
 
+root = Tk()
 
 x = int(input("Hola, amb qui estic parlant? (1:Hicham, 2:Laura, 3:Pau, altres:jf0) "))
 
@@ -16,10 +19,12 @@ llibre_1 = load_workbook(db_1)
 fulla_1 = llibre_1.active
 
 if x == 1:
-    print(fulla_1["B2"].value)
+    MessageBox.showwarning("Alerta",fulla_1["B2"].value)
 elif x == 2:
-    print(fulla_1["B4"].value)
+    MessageBox.showwarning("Alerta",fulla_1["B4"].value)
 elif x == 3:
-    print(fulla_1["B6"].value)
+    MessageBox.showwarning("Alerta",fulla_1["B6"].value)
 else:
-    print(fulla_1["B8"].value)
+    MessageBox.showwarning("Alerta",fulla_1["B8"].value)
+
+root.mainloop()
