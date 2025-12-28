@@ -207,5 +207,3 @@ if __name__ == "__main__":
     print("-" * 30)
     for sub, g in zip(compostos_sel, gammas):
         print(f"Gamma ({sub}): {g:.4f}")
-    # except Exception as e:
-    #     print(f"Error: {e}")
