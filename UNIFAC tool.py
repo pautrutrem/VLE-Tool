@@ -6,9 +6,11 @@ import numpy as np
 def carregar_dades():
 
     #Cargar archivos Excel
-    compostos = pd.read_csv("UNIFAC_database.xlsx - Groups_compounds.csv")
-    grups = pd.read_csv("UNIFAC_database.xlsx - UNIFAC_Groups.csv")
-    int_param_mn = pd.read_csv("UNIFAC_database.xlsx - Param_amn.csv")
+    filename = "UNIFAC_database.xlsx"
+
+    compostos = pd.read_excel(filename, sheet_name="Groups_compounds", engine="openpyxl")
+    grups = pd.read_excel(filename, sheet_name="UNIFAC_Groups", engine="openpyxl")
+    int_param_mn = pd.read_excel(filename, sheet_name="Param_amn", engine="openpyxl")
 
     #Crear diccionario de propiedades -> {Grupo, Rk, Qk}
     prop_grups = grups.set_index("Symbol")[["Group_No","Rk","Qk"]].to_dict("index")
@@ -16,7 +18,7 @@ def carregar_dades():
     #Crear diccionario de interacciones: (Grupo_m, Grupo_n) -> Parámetro a_mn
     interaccions = {}
     for _, row in int_param_mn.iterrows():
-        interaccions[(int(row["Group_m"]),int(row["Group_n"]))] = row["a_mn"]
+        interaccions[(int(row["Group_m"]),int(row["Group_n"]))] = row["Param"]
     
     #Definir grupos de cada compuesto -> {Grupo: Cantidad}
     molecules = {}
@@ -37,7 +39,7 @@ def carregar_dades():
 #1. Calcular Psi = exp(-a_mn / T)
 def psi(grup_1, grup_2, T, interaccions):
     
-    #Si el grupo es el mismo, devuelve 1.0
+    #Si el grupo es el mismo, devuelve 1
     if grup_1 == grup_2:
         return 1.0
     
@@ -46,7 +48,7 @@ def psi(grup_1, grup_2, T, interaccions):
 
     #Si la interacción no se encuentra, se asume 0
     if a_mn is None:
-        return 0.0
+        return 1.0
     
     #Devolver el valor de Psi
     return np.exp(-a_mn / T)
@@ -197,14 +199,13 @@ if __name__ == "__main__":
     x_sel = [0.4, 0.6] #40% en mol de Etanol
     T_sel = 298.15 #K
 
-    try:
-        gammas = coefs_act(compostos_sel, x_sel, T_sel, molecules, prop_grups, interaccions)
+    gammas = coefs_act(compostos_sel, x_sel, T_sel, molecules, prop_grups, interaccions)
 
-        print(f"Sistema: {compostos_sel}")
-        print(f"Composició x: {x_sel}")
-        print(f"Temperatura: {T_sel}")
-        print("-" * 30)
-        for sub, g in zip(compostos_sel, gammas):
-            print(f"Gamma ({sub}): {g:.4f}")
-    except Exception as e:
-        print(f"Error: {e}")
+    print(f"Sistema: {compostos_sel}")
+    print(f"Composició x: {x_sel}")
+    print(f"Temperatura: {T_sel}")
+    print("-" * 30)
+    for sub, g in zip(compostos_sel, gammas):
+        print(f"Gamma ({sub}): {g:.4f}")
+    # except Exception as e:
+    #     print(f"Error: {e}")
