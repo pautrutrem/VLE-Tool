@@ -205,3 +205,5 @@ if __name__ == "__main__":
     print("-" * 30)
     for sub, g in zip(my_substances, gammas):
         print(f"Gamma ({sub}): {g:.4f}")
+
+#Base de datos oficial para contrastar: http://ddbonline.ddbst.com/UNIFACCalculation/UNIFACCalculationCGI.exe
