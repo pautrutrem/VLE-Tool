@@ -204,6 +204,6 @@ if __name__ == "__main__":
     print(f"Temperatura: {my_T}")
     print("-" * 30)
     for sub, g in zip(my_substances, gammas):
-        print(f"Gamma ({sub}): {g:.4f}")
+        print(f"Gamma ({sub}): {g:.5f}")
 
 #Base de datos oficial para contrastar: http://ddbonline.ddbst.com/UNIFACCalculation/UNIFACCalculationCGI.exe
