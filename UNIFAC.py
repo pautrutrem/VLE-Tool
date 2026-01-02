@@ -201,7 +201,7 @@ if __name__ == "__main__":
 
     print(f"Sistema: {my_substances}")
     print(f"Composición molar x: {my_x}")
-    print(f"Temperatura: {my_T}")
+    print(f"Temperatura: {my_T} K")
     print("-" * 30)
     for sub, g in zip(my_substances, gammas):
         print(f"Gamma ({sub}): {g:.5f}")
