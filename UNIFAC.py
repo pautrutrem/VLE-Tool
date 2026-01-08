@@ -193,8 +193,8 @@ def get_activity_coefficients(substances, x, T, molecule_defs, group_props, inte
 #Ejemplo
 if __name__ == "__main__":
     group_props, interactions, molecule_defs = load_unifac_data()
-    my_substances = ["Ethanol", "Water"]
-    my_x = [0.4, 0.6] #40% en mol de Etanol
+    my_substances = ["Benzene", "Water", "Toluene", "Isopropanol"]
+    my_x = [0.3, 0.3, 0.2, 0.2]
     my_T = 298.15 #K
 
     gammas = get_activity_coefficients(my_substances, my_x, my_T, molecule_defs, group_props, interactions)
